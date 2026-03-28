@@ -1,0 +1,4 @@
+[0321/195836.584:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: 指定されたファイルが見つかりません。 (0x2)
+[0321/195836.604:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: 指定されたファイルが見つかりません。 (0x2)
+[0321/201803.934:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: 指定されたファイルが見つかりません。 (0x2)
+[0321/201804.046:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: 指定されたファイルが見つかりません。 (0x2)
