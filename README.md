@@ -1,52 +1,52 @@
 # Claude Code Token Widget
 
-Real-time desktop widget for monitoring Claude Code token usage, rate limits, and costs.
+Claude Code のトークン使用量をリアルタイムで監視するデスクトップウィジェットです。
 
-Built with **Tauri 2.0** (Rust) + **Svelte 5** for minimal resource footprint.
+**Tauri 2.0** (Rust) + **Svelte 5** で構築。軽量で常駐に最適です。
 
 ![Windows](https://img.shields.io/badge/platform-Windows-blue)
 ![Tauri](https://img.shields.io/badge/Tauri-2.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-## Features
+## 主な機能
 
-- **Rate Limit Tracking** - 5-hour and 7-day usage with reset countdown
-- **Context Window** - Progress bar with color-coded usage levels
-- **Token Stats** - Input, output, cache read, and cache creation tokens
-- **Cost Display** - USD/JPY with configurable exchange rate
-- **OS Alerts** - Native notifications at 50%, 75%, 90% thresholds
-- **Heatmap** - 26-week GitHub-style usage history
-- **Wake-Up Scheduler** - Auto-launch Claude CLI at a set time
-- **System Tray** - Tooltip with quick stats, show/hide toggle
-- **Themes** - Dark (default) and Light
-- **Customizable** - Font size (10-18px), opacity (30-100%), display items toggle
+- **レート制限トラッキング** - 5時間/7日間の使用率とリセットまでのカウントダウン
+- **コンテキストウィンドウ** - 使用率に応じて色が変わるプログレスバー
+- **トークン統計** - 入力・出力・キャッシュリード・キャッシュ作成トークン
+- **コスト表示** - USD/JPY 切り替え、為替レート手動設定可
+- **OS通知アラート** - 使用率 50%/75%/90% でネイティブ通知
+- **ヒートマップ** - 26週間の GitHub 風使用量履歴
+- **ウェイクアップスケジューラ** - 指定時刻に Claude CLI を自動起動
+- **システムトレイ** - ツールチップで主要指標を表示、表示/非表示切替
+- **テーマ** - ダーク（デフォルト）/ ライト
+- **カスタマイズ** - フォントサイズ (10-18px)、透明度 (30-100%)、表示項目の切替
 
-## Prerequisites
+## 前提条件
 
-- **Claude Code** installed and working ([install guide](https://docs.anthropic.com/en/docs/claude-code/overview))
-- **Windows 10 or 11** (x64)
-  - Windows 10 users: install [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) if not already present (pre-installed on Windows 11)
+- **Claude Code** がインストール済みであること（[公式ガイド](https://docs.anthropic.com/en/docs/claude-code/overview)）
+- **Windows 10 または 11**（x64）
+  - Windows 10 の場合: [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) が必要です（Windows 11 にはプリインストール済み）
 
-## Getting Started
+## セットアップ手順
 
-### Step 1: Download and install the widget
+### ステップ 1: ウィジェットをダウンロード・インストール
 
-1. Go to [Releases](https://github.com/creolab-dev/claude-code-token-widget/releases)
-2. Download one of the following:
+1. [Releases ページ](https://github.com/creolab-dev/claude-code-token-widget/releases) を開く
+2. 以下のいずれかをダウンロード:
 
-   | File | Description |
-   |------|-------------|
-   | `Claude Code Token Widget_0.1.0_x64-setup.exe` | Installer (recommended) |
-   | `Claude Code Token Widget_0.1.0_x64_en-US.msi` | MSI installer |
-   | `claude-code-token-widget.exe` | Portable (no install needed) |
+   | ファイル | 説明 |
+   |---------|------|
+   | `Claude Code Token Widget_0.1.0_x64-setup.exe` | インストーラ（推奨） |
+   | `Claude Code Token Widget_0.1.0_x64_en-US.msi` | MSI インストーラ |
+   | `claude-code-token-widget.exe` | ポータブル版（インストール不要） |
 
-3. Run the installer and follow the prompts, or place the portable `.exe` anywhere you like
+3. インストーラを実行して画面の指示に従う、またはポータブル版の `.exe` を好きな場所に配置
 
-### Step 2: Create the statusline script
+### ステップ 2: statusline スクリプトを作成
 
-The widget reads token data from a JSON file that Claude Code writes via its status line feature. You need to create a small script that receives this data.
+ウィジェットは Claude Code が出力する JSON ファイル (`~/.claude/token-usage.json`) を読み取ります。このデータを受け取るスクリプトを作成します。
 
-1. Open a terminal (Git Bash, WSL, or similar) and run:
+1. ターミナル（Git Bash、WSL など）を開いて以下を実行:
 
    ```bash
    cat > ~/.claude/statusline.sh << 'EOF'
@@ -62,20 +62,20 @@ The widget reads token data from a JSON file that Claude Code writes via its sta
    EOF
    ```
 
-2. Make the script executable:
+2. スクリプトに実行権限を付与:
 
    ```bash
    chmod +x ~/.claude/statusline.sh
    ```
 
-> **Windows path note:** `~/.claude/` corresponds to `C:\Users\<your-username>\.claude\` on Windows.
+> **Windows のパスについて:** `~/.claude/` は Windows では `C:\Users\<ユーザー名>\.claude\` に対応します。
 
-### Step 3: Enable the status line in Claude Code
+### ステップ 3: Claude Code のステータスラインを有効化
 
-Add the `statusLine` setting to your Claude Code config.
+Claude Code の設定ファイルに `statusLine` を追加します。
 
-1. Open `~/.claude/settings.json` in a text editor
-2. Add the following (merge with your existing settings if the file already exists):
+1. `~/.claude/settings.json` をテキストエディタで開く
+2. 以下を追加（既存の設定がある場合はマージしてください）:
 
    ```json
    {
@@ -86,11 +86,11 @@ Add the `statusLine` setting to your Claude Code config.
    }
    ```
 
-   If you already have other settings in the file, just add the `"statusLine"` key inside the existing `{}`:
+   既に他の設定がある場合は、既存の `{}` の中に `"statusLine"` キーを追加:
 
    ```json
    {
-     "existing_setting": "...",
+     "既存の設定": "...",
      "statusLine": {
        "type": "command",
        "command": "bash ~/.claude/statusline.sh"
@@ -98,20 +98,20 @@ Add the `statusLine` setting to your Claude Code config.
    }
    ```
 
-### Step 4: Launch and verify
+### ステップ 4: 起動して確認
 
-1. Start the widget (from Start Menu or the portable `.exe`)
-2. Open Claude Code in a terminal and start a conversation
-3. The widget should display token usage data within a few seconds
+1. ウィジェットを起動（スタートメニューまたはポータブル版の `.exe`）
+2. ターミナルで Claude Code を開き、会話を開始
+3. 数秒以内にウィジェットにトークン使用量が表示される
 
-If the widget shows no data, check that:
-- Claude Code is running and you have an active conversation
-- `~/.claude/token-usage.json` exists (it's created after the first Claude Code message)
-- The `statusLine` setting in `settings.json` is correct
+**データが表示されない場合:**
+- Claude Code が起動中で、会話がアクティブか確認
+- `~/.claude/token-usage.json` が存在するか確認（最初のメッセージ送信後に作成されます）
+- `settings.json` の `statusLine` 設定が正しいか確認
 
-### Build from Source (optional)
+### ソースからビルド（任意）
 
-Prerequisites: [Rust 1.94+](https://rustup.rs/), [Node.js 18+](https://nodejs.org/)
+前提: [Rust 1.94+](https://rustup.rs/)、[Node.js 18+](https://nodejs.org/)
 
 ```bash
 git clone https://github.com/creolab-dev/claude-code-token-widget.git
@@ -120,75 +120,75 @@ npm install
 npm run tauri build
 ```
 
-Binaries output to `src-tauri/target/release/bundle/`.
+バイナリは `src-tauri/target/release/bundle/` に出力されます。
 
-## Usage
+## 使い方
 
-The widget has 3 views, accessible via the icons at the bottom:
+画面下部のアイコンで 3 つのビューを切り替えられます:
 
-| View | Content |
-|------|---------|
-| **Main** | Rate limits, context window, tokens, cost, session info |
-| **Settings** | Theme, font size, opacity, currency, alerts, display toggles |
-| **Heatmap** | 26-week daily usage history (GitHub-style grid) |
+| ビュー | 内容 |
+|--------|------|
+| **メイン** | レート制限、コンテキストウィンドウ、トークン、コスト、セッション情報 |
+| **設定** | テーマ、フォントサイズ、透明度、通貨、アラート、表示項目 |
+| **ヒートマップ** | 26週間の日次使用量（GitHub 風グリッド） |
 
-### Settings
+### 設定項目
 
-| Setting | Default | Range |
-|---------|---------|-------|
-| Theme | Dark | Dark / Light |
-| Font Size | 12px | 10-18px |
-| Opacity | 100% | 30-100% |
-| Currency | USD | USD / JPY |
-| JPY Rate | 150 | Manual input |
-| Always on Top | On | On / Off |
-| Alert Thresholds | 50%, 75%, 90% | Toggle each |
+| 設定 | デフォルト | 範囲 |
+|------|----------|------|
+| テーマ | ダーク | ダーク / ライト |
+| フォントサイズ | 12px | 10-18px |
+| 透明度 | 100% | 30-100% |
+| 通貨 | USD | USD / JPY |
+| 為替レート | 150 | 手動入力 |
+| 常に最前面 | オン | オン / オフ |
+| アラート閾値 | 50%, 75%, 90% | 個別切替 |
 
-### System Tray
+### システムトレイ
 
-Right-click the tray icon for:
-- Show / Hide widget
-- Always on Top toggle
-- Quit
+トレイアイコンを右クリック:
+- 表示 / 非表示
+- 常に最前面の切替
+- 終了
 
-Tooltip displays: `5H: X% | 7D: X% | Ctx: X%`
+ツールチップ表示: `5H: X% | 7D: X% | Ctx: X%`
 
-## Performance
+## パフォーマンス
 
-| Metric | Value |
-|--------|-------|
-| Idle Memory | < 40 MB |
-| Idle CPU | < 1% |
-| Update Latency | < 1 second |
-| Installer Size | < 10 MB |
+| 指標 | 値 |
+|------|-----|
+| アイドルメモリ | 40 MB 以下 |
+| アイドル CPU | 1% 以下 |
+| 更新レイテンシ | 1 秒以下 |
+| インストーラサイズ | 10 MB 以下 |
 
-## Tech Stack
+## 技術スタック
 
-- **Backend**: Rust + Tauri 2.0
-- **Frontend**: SvelteKit + Svelte 5 (Runes)
-- **File Watching**: notify-debouncer-mini (100ms) with 5s polling fallback
-- **Storage**: tauri-plugin-store (settings + heatmap)
-- **Notifications**: tauri-plugin-notification
+- **バックエンド**: Rust + Tauri 2.0
+- **フロントエンド**: SvelteKit + Svelte 5 (Runes)
+- **ファイル監視**: notify-debouncer-mini (100ms デバウンス) + 5秒ポーリングフォールバック
+- **ストレージ**: tauri-plugin-store（設定 + ヒートマップ）
+- **通知**: tauri-plugin-notification
 
-## Development
+## 開発
 
 ```bash
-# Dev mode (hot reload)
+# 開発モード（ホットリロード）
 npm run tauri dev
 
-# Type check
+# 型チェック
 npm run check
 
-# Run all tests (55 Rust + 55 vitest)
+# 全テスト実行（Rust 55 + vitest 55）
 npm run test:all
 
-# Rust tests only
+# Rust テストのみ
 cd src-tauri && cargo test
 
-# Frontend tests only
+# フロントエンドテストのみ
 npm test
 ```
 
-## License
+## ライセンス
 
 MIT
