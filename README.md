@@ -21,23 +21,97 @@ Built with **Tauri 2.0** (Rust) + **Svelte 5** for minimal resource footprint.
 - **Themes** - Dark (default) and Light
 - **Customizable** - Font size (10-18px), opacity (30-100%), display items toggle
 
-## Install
+## Prerequisites
 
-### Download (Recommended)
+- **Claude Code** installed and working ([install guide](https://docs.anthropic.com/en/docs/claude-code/overview))
+- **Windows 10 or 11** (x64)
+  - Windows 10 users: install [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) if not already present (pre-installed on Windows 11)
 
-Download the latest release from [Releases](https://github.com/creolab-dev/claude-code-token-widget/releases):
+## Getting Started
 
-| File | Description |
-|------|-------------|
-| `Claude Code Token Widget_0.1.0_x64-setup.exe` | NSIS installer (recommended) |
-| `Claude Code Token Widget_0.1.0_x64_en-US.msi` | MSI installer |
-| `claude-code-token-widget.exe` | Portable executable |
+### Step 1: Download and install the widget
 
-> Windows 11 recommended. Windows 10 requires [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
+1. Go to [Releases](https://github.com/creolab-dev/claude-code-token-widget/releases)
+2. Download one of the following:
 
-### Build from Source
+   | File | Description |
+   |------|-------------|
+   | `Claude Code Token Widget_0.1.0_x64-setup.exe` | Installer (recommended) |
+   | `Claude Code Token Widget_0.1.0_x64_en-US.msi` | MSI installer |
+   | `claude-code-token-widget.exe` | Portable (no install needed) |
 
-Prerequisites: Rust 1.94+, Node.js 18+
+3. Run the installer and follow the prompts, or place the portable `.exe` anywhere you like
+
+### Step 2: Create the statusline script
+
+The widget reads token data from a JSON file that Claude Code writes via its status line feature. You need to create a small script that receives this data.
+
+1. Open a terminal (Git Bash, WSL, or similar) and run:
+
+   ```bash
+   cat > ~/.claude/statusline.sh << 'EOF'
+   #!/bin/bash
+   OUTFILE="$HOME/.claude/token-usage.json"
+   TMPFILE="${OUTFILE}.tmp"
+
+   INPUT=$(cat)
+
+   if [ -n "$INPUT" ]; then
+       echo "$INPUT" > "$TMPFILE" && mv "$TMPFILE" "$OUTFILE"
+   fi
+   EOF
+   ```
+
+2. Make the script executable:
+
+   ```bash
+   chmod +x ~/.claude/statusline.sh
+   ```
+
+> **Windows path note:** `~/.claude/` corresponds to `C:\Users\<your-username>\.claude\` on Windows.
+
+### Step 3: Enable the status line in Claude Code
+
+Add the `statusLine` setting to your Claude Code config.
+
+1. Open `~/.claude/settings.json` in a text editor
+2. Add the following (merge with your existing settings if the file already exists):
+
+   ```json
+   {
+     "statusLine": {
+       "type": "command",
+       "command": "bash ~/.claude/statusline.sh"
+     }
+   }
+   ```
+
+   If you already have other settings in the file, just add the `"statusLine"` key inside the existing `{}`:
+
+   ```json
+   {
+     "existing_setting": "...",
+     "statusLine": {
+       "type": "command",
+       "command": "bash ~/.claude/statusline.sh"
+     }
+   }
+   ```
+
+### Step 4: Launch and verify
+
+1. Start the widget (from Start Menu or the portable `.exe`)
+2. Open Claude Code in a terminal and start a conversation
+3. The widget should display token usage data within a few seconds
+
+If the widget shows no data, check that:
+- Claude Code is running and you have an active conversation
+- `~/.claude/token-usage.json` exists (it's created after the first Claude Code message)
+- The `statusLine` setting in `settings.json` is correct
+
+### Build from Source (optional)
+
+Prerequisites: [Rust 1.94+](https://rustup.rs/), [Node.js 18+](https://nodejs.org/)
 
 ```bash
 git clone https://github.com/creolab-dev/claude-code-token-widget.git
@@ -47,43 +121,6 @@ npm run tauri build
 ```
 
 Binaries output to `src-tauri/target/release/bundle/`.
-
-## Setup
-
-The widget reads token data from `~/.claude/token-usage.json`, written by Claude Code's status line feature.
-
-### 1. Create the statusline script
-
-Create `~/.claude/statusline.sh`:
-
-```bash
-#!/bin/bash
-OUTFILE="$HOME/.claude/token-usage.json"
-TMPFILE="${OUTFILE}.tmp"
-
-INPUT=$(cat)
-
-if [ -n "$INPUT" ]; then
-    echo "$INPUT" > "$TMPFILE" && mv "$TMPFILE" "$OUTFILE"
-fi
-```
-
-### 2. Enable status line in Claude Code
-
-Add to `~/.claude/settings.json`:
-
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
-  }
-}
-```
-
-### 3. Launch the widget
-
-Run the installed app or portable `.exe`. The widget appears as a frameless, always-on-top window.
 
 ## Usage
 
