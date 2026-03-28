@@ -8,6 +8,8 @@ Claude Code のトークン使用量をリアルタイムで監視するデス�
 ![Tauri](https://img.shields.io/badge/Tauri-2.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+![Screenshot](docs/screenshot-main.png)
+
 ## 主な機能
 
 - **レート制限トラッキング** - 5時間/7日間の使用率とリセットまでのカウントダウン
