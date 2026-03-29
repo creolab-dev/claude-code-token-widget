@@ -8,7 +8,7 @@ Claude Code のトークン使用量をリアルタイムで監視するデス�
 ![Tauri](https://img.shields.io/badge/Tauri-2.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-![Screenshot](docs/screenshot-main.png)
+![Screenshot](images/screenshot-main.png)
 
 ## 主な機能
 

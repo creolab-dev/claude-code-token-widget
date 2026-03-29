@@ -11,3 +11,7 @@ vite.config.ts.timestamp-*
 
 debug.log
 .claude/settings.local.json
+CLAUDE.md
+STATUS.md
+docs/
+.vscode/
