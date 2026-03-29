@@ -8,7 +8,11 @@ Claude Code のトークン使用量をリアルタイムで監視するデス�
 ![Tauri](https://img.shields.io/badge/Tauri-2.0-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-![Screenshot](images/screenshot-main.png)
+| 通常 | 注意 | 警告 | 危険 |
+|:----:|:----:|:----:|:----:|
+| ![Green](images/screenshot-green.png) | ![Yellow](images/screenshot-yellow.png) | ![Orange](images/screenshot-orange.png) | ![Red](images/screenshot-red.png) |
+
+使用率に応じてプログレスバーの色が自動で変化します。
 
 ## 主な機能
 
